@@ -3,7 +3,7 @@ import platform
 
 def ping_host(host):
     param = "-n" if platform.system().lower() == "windows" else "-c"
-    command = ["ping", param, "1", host]
+    command = ["ping", param, "4", host]
 
     proc = subprocess.Popen(
         command,
@@ -14,9 +14,9 @@ def ping_host(host):
 
     out, err = proc.communicate()
     output = out.lower() + err.lower()
-    
-    if "ttl=" in output:
-        return True
-    else:
+    print(output)
+
+    if "0 received" in output:
         return False
-    
+    else:
+        return True

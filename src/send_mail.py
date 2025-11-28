@@ -19,10 +19,22 @@ def send_mail(host, content):
     msg["From"] = sender_address
     msg["To"] = recipient_address
     msg["Subject"] = f"{host} {content}"
-
     body = f"{host} {content}"
     msg.attach(MIMEText(body, "plain"))
 
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.starttls() 
+        server.login(sender_address, sender_password)
+        server.send_message(msg)
+
+    return 
+
+def send_alive():
+    msg = MIMEMultipart()
+    msg["From"] = sender_address
+    msg["To"] = recipient_address
+    msg["Subject"] = f"hsn is running"
+    
     with smtplib.SMTP(smtp_server, port) as server:
         server.starttls() 
         server.login(sender_address, sender_password)

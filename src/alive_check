@@ -1,0 +1,7 @@
+import send_mail
+import time
+
+def alive_check(hours):
+    while True
+        send_mail.send_alive()
+        time.sleep(60*60*hours)

@@ -1,13 +1,17 @@
 import ping 
 import send_mail
+import alive_check
 import time
 import configparser
+import threading
 
 config = configparser.ConfigParser()
 config.read("config.ini")
 
 hosts = [(h.strip(), True) for h in config["OPTIONS"]["hosts"].split(",")] #Create tuples with host IP's and a bool which represents up status.
-delay = config["OPTIONS"]["delay"]
+delay = int(config["OPTIONS"]["delay"])
+
+alive_checker = threading.Thread(target=alive_check.alive_check(24))
 
 while True:
     i = 0
@@ -25,5 +29,5 @@ while True:
                 print(host[0], "is up")
                 print(hosts)
         i +=1
-    time.sleep(10)
+    time.sleep(delay)
     
